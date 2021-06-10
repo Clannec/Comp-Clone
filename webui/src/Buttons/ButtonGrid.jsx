@@ -90,10 +90,7 @@ export const ButtonsGridPanel = memo(function ButtonsPage({
 	const clearNewPageName = useCallback(() => setNewPageName(null), [])
 	const changeNewPageName = useCallback(
 		(e) => {
-			context.socket.emit('set_page', pageNumber, {
-				...pageInfo,
-				name: e.currentTarget.value,
-			})
+			context.socket.emit('set_page', pageNumber, e.currentTarget.value)
 			setNewPageName(e.currentTarget.value)
 		},
 		[context.socket, pageNumber, pageInfo]
@@ -129,10 +126,10 @@ export const ButtonsGridPanel = memo(function ButtonsPage({
 			})
 		}
 
-		context.socket.on('set_page', updatePageInfo)
+		context.socket.on('set_page:result', updatePageInfo)
 
 		return () => {
-			context.socket.off('set_page', updatePageInfo)
+			context.socket.off('set_page:result', updatePageInfo)
 		}
 	}, [context.socket, retryToken])
 
