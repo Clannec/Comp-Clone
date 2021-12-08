@@ -26,8 +26,13 @@
 				"node_modules/moment",
 				"node_modules/select2",
 				"node_modules/tributejs/dist"
-			]
+			],
+			"hardenedRuntime": "true",
+			"gatekeeperAssess": "false",
+			"entitlements": "entitlements.mac.plist",
+			"entitlementsInherit": "entitlements.mac.plist"
 		},
+		"afterSign": "tools/notarize.js",
 		"win": {
 			"target": "nsis",
 			"timeStampServer": "http://timestamp.sectigo.com"
@@ -91,6 +96,7 @@
 		"chai-fs": "^2.0.0",
 		"electron": "^2.0.8",
 		"electron-builder": "20.10.0",
+		"electron-notarize": "0.3.0",
 		"mocha": "^6.1.4",
 		"nodemon": "^2.0.2",
 		"s3": "^4.4.0",
