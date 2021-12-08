@@ -27,8 +27,6 @@
 				"node_modules/select2",
 				"node_modules/tributejs/dist"
 			],
-			"hardenedRuntime": "true",
-			"gatekeeperAssess": "false",
 			"entitlements": "entitlements.mac.plist",
 			"entitlementsInherit": "entitlements.mac.plist"
 		},
