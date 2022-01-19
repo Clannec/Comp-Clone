@@ -1,6 +1,6 @@
 {
 	"name": "companion",
-	"version": "2.2.0",
+	"version": "2.3.0",
 	"description": "Companion",
 	"main": "electron.js",
 	"build": {
@@ -110,7 +110,8 @@
 		"headless": "nodemon --ignore './webui/' headless.js",
 		"dev-headless": "./tools/build_writefile.sh && cross-env DEVELOPER=1 nodemon --ignore './webui/' headless.js",
 		"dev-webui": "yarn --cwd webui dev",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"jsdoc": "jsdoc -c jsdoc.json"
 	},
 	"repository": "https://github.com/bitfocus/companion",
 	"keywords": [
@@ -127,12 +128,14 @@
 		"cross-env": "^7.0.3",
 		"electron": "^11.3.0",
 		"electron-builder": "22.10.5",
+		"jsdoc": "github:bitfocus/jsdoc#3.6.6-patch",
 		"mocha": "^6.2.3",
 		"nodemon": "^2.0.7",
 		"p-all": "^3.0.0",
 		"prettier": "^2.2.1",
 		"rimraf": "^3.0.2",
-		"s3-upload-stream": "^1.0.7"
+		"s3-upload-stream": "^1.0.7",
+		"tui-jsdoc-template": "^1.2.2"
 	},
 	"dependencies": {
 		"@sentry/electron": "^1.3.0",
@@ -431,7 +434,9 @@
 		"shortid": "^2.2.16",
 		"socket.io": "^4.0.2",
 		"strip-ansi": "^5.2.0",
-		"websocket": "^1.0.34"
+		"tributejs": "github:peschuster/tribute",
+		"websocket": "^1.0.34",
+		"xkeys": "^1.1.1"
 	},
 	"collective": {
 		"type": "donorbox",

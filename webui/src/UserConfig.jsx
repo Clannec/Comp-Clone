@@ -37,7 +37,7 @@ function UserConfigTable() {
 				[key]: value,
 			}))
 		}
-		context.socket.on('set_userconfig_key', updateConfigValue)
+		context.socket.on('set_userconfig_key:result', updateConfigValue)
 		socketEmit(context.socket, 'get_userconfig_all', [])
 			.then(([config]) => {
 				setConfig(config)

@@ -1,10 +1,12 @@
 package.json
 lib/module/*
-lib/font.js
-lib/satellite_protocol.js
+lib/Resources/Font.js
+lib/Resources/SatelliteProtocol.js
 electron-output/
 webui/package.json
 webui/build/
 webui/public/legacy
 /LICENSE.md
+module-local-dev
+documentation/jsdoc/
 docs/*
