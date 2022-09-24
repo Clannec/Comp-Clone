@@ -19,6 +19,7 @@ import {
 	faClipboardList,
 	faClock,
 	faCloud,
+	faFileImport,
 	faGamepad,
 	faPlug,
 	faUserNinja,
@@ -38,6 +39,7 @@ import { InstancesPage } from './Instances'
 import { ButtonsPage } from './Buttons'
 import { ContextData } from './ContextData'
 import { CloudPage } from './CloudPage'
+import { ImportExport } from './ImportExport'
 import { WizardModal, WIZARD_CURRENT_VERSION } from './Wizard'
 import { Navigate, useLocation } from 'react-router-dom'
 import { useIdleTimer } from 'react-idle-timer'
@@ -401,6 +403,11 @@ function AppContent({ buttonGridHotPress }) {
 					</CNavLink>
 				</CNavItem>
 				<CNavItem>
+					<CNavLink to="/importexport">
+						<FontAwesomeIcon icon={faFileImport} /> Import / Export
+					</CNavLink>
+				</CNavItem>
+				<CNavItem>
 					<CNavLink to="/log">
 						<FontAwesomeIcon icon={faClipboardList} /> Log
 					</CNavLink>
@@ -435,6 +442,11 @@ function AppContent({ buttonGridHotPress }) {
 				<CTabPane className={getClassForPane('/settings')}>
 					<MyErrorBoundary>
 						<UserConfig />
+					</MyErrorBoundary>
+				</CTabPane>
+				<CTabPane className={getClassForPane('/importexport')}>
+					<MyErrorBoundary>
+						<ImportExport />
 					</MyErrorBoundary>
 				</CTabPane>
 				<CTabPane className={getClassForPane('/log')}>
