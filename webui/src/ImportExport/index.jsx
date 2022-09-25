@@ -10,14 +10,16 @@ export function ImportExport() {
 	const socket = useContext(SocketContext)
 	const instancesContext = useContext(InstancesContext)
 
-	const modalRef = useRef()
-
-	const doReset = useCallback(() => modalRef.current.show('reset'), [])
-	const doImport = useCallback((mode) => modalRef.current.show(mode, snapshot), [])
-
 	const [loadError, setLoadError] = useState(null)
 	const [snapshot, setSnapshot] = useState(null)
 	const [instanceRemap, setInstanceRemap] = useState({})
+
+	const modalRef = useRef()
+	const doReset = useCallback(() => modalRef.current.show('reset'), [])
+	const doImport = useCallback(
+		(mode) => modalRef.current.show(mode, snapshot, instanceRemap),
+		[snapshot, instanceRemap]
+	)
 
 	const fileApiIsSupported = !!(window.File && window.FileReader && window.FileList && window.Blob)
 
@@ -75,7 +77,7 @@ export function ImportExport() {
 			}
 			fr.readAsText(newFiles[0])
 		},
-		[socket, instancesContext, fileApiIsSupported]
+		[socket, instancesContext, doImport]
 	)
 
 	return (

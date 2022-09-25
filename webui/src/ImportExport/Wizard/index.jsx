@@ -10,22 +10,18 @@ export const WizardModal = forwardRef(function WizardModal(_props, ref) {
 	const [applyStep, setApplyStep] = useState(5)
 	const [clear, setClear] = useState(true)
 	const [show, setShow] = useState(false)
-	const [needsRefresh, setNeedsRefresh] = useState(false)
 	const [config, setConfig] = useState({})
 	const [applyError, setApplyError] = useState(null)
 	const [wizardTitle, setWizardTitle] = useState(null)
 
 	const [snapshot, setSnapshot] = useState(null)
 	const [wizardMode, setWizardMode] = useState(null)
+	const [instanceRemap, setInstanceRemap] = useState({})
 
 	const doClose = useCallback(() => {
-	//	if (needsRefresh) {
-	//		window.location.reload()
-	//	} else {
-			setShow(false)
-			setClear(true)
-	//	}
-	}, [socket, needsRefresh])
+		setShow(false)
+		setClear(true)
+	}, [])
 
 	const doNextStep = useCallback(() => {
 		let newStep = currentStep
@@ -64,8 +60,6 @@ export const WizardModal = forwardRef(function WizardModal(_props, ref) {
 						.then((status) => {
 							if (status !== 'ok') {
 								setApplyError('An unspecified error occurred during the reset.  Please try again.')
-							} else {
-								setNeedsRefresh(true)
 							}
 							doNextStep()
 						})
@@ -74,11 +68,12 @@ export const WizardModal = forwardRef(function WizardModal(_props, ref) {
 							doNextStep()
 						})
 					break
+				default:
 			}
 
 			doNextStep()
 		},
-		[socket, snapshot, config, doNextStep]
+		[socket, wizardMode, snapshot, config, doNextStep]
 	)
 
 	const setValue = (key, value) => {
@@ -88,44 +83,45 @@ export const WizardModal = forwardRef(function WizardModal(_props, ref) {
 		}))
 	}
 
-	const setupWizard = useCallback(
-		(mode) => {
-			setWizardMode(mode)
+	const setupWizard = useCallback((mode) => {
+		setWizardMode(mode)
 
-			switch (mode) {
-				case 'import_page':
-					setMaxSteps(6)
-					setApplyStep(5)
-					setWizardTitle("Import Wizard")
-					break
-				case 'import_full':
-					setMaxSteps(4)
-					setApplyStep(3)
-					setWizardTitle("Import Wizard")
-					break
-				case 'export':
-					setMaxSteps(3)
-					setApplyStep(null)
-					setWizardTitle("Export Wizard")
-					break
-				case 'reset':
-					setMaxSteps(4)
-					setApplyStep(3)
-					setConfig({ connections: true, buttons: true, surfaces: true, triggers: true, customVariables: true, userconfig: true })
-					setWizardTitle("Reset Configuration Wizard")
-					break
-			}
-		},
-		[]
-	)
+		switch (mode) {
+			case 'import_page':
+				setMaxSteps(6)
+				setApplyStep(5)
+				setWizardTitle('Import Wizard')
+				break
+			case 'import_full':
+				setMaxSteps(4)
+				setApplyStep(3)
+				setWizardTitle('Import Wizard')
+				break
+			case 'reset':
+				setMaxSteps(4)
+				setApplyStep(3)
+				setConfig({
+					connections: true,
+					buttons: true,
+					surfaces: true,
+					triggers: true,
+					customVariables: true,
+					userconfig: true,
+				})
+				setWizardTitle('Reset Configuration Wizard')
+				break
+			default:
+		}
+	}, [])
 
 	useImperativeHandle(
 		ref,
 		() => ({
-			show(mode, snaphsot) {
+			show(mode, snaphsot, instanceRemap) {
 				if (clear) {
 					setupWizard(mode)
 					setSnapshot(snaphsot)
+					setInstanceRemap(instanceRemap)
 					setCurrentStep(1)
 					setApplyError(null)
 				}
@@ -133,7 +129,7 @@ export const WizardModal = forwardRef(function WizardModal(_props, ref) {
 				setClear(false)
 			},
 		}),
-		[clear]
+		[clear, setupWizard]
 	)
 
 	let nextButton
@@ -166,8 +162,6 @@ export const WizardModal = forwardRef(function WizardModal(_props, ref) {
 			break
 		case 'import_full':
 			break
-		case 'export':
-			break
 		case 'reset':
 			switch (currentStep) {
 				case 1:
@@ -180,10 +174,12 @@ export const WizardModal = forwardRef(function WizardModal(_props, ref) {
 					modalBody = <ResetApplyStep config={config} />
 					break
 				case 4:
-					//modalBody = <ResetFinishStep refresh={needsRefresh} error={applyError} />
+					//modalBody = <ResetFinishStep error={applyError} />
 					break
+				default:
 			}
 			break
+		default:
 	}
 
 	return (

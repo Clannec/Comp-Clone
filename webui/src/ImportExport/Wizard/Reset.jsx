@@ -52,16 +52,6 @@ export function ResetOptionsStep({ config, setValue }) {
 			<div className="indent3">
 				<div className="form-check form-check-inline mr-1">
 					<CInputCheckbox
-						id="wizard_surfaces"
-						checked={config.surfaces}
-						onChange={(e) => setValue('surfaces', e.currentTarget.checked)}
-					/>
-					<CLabel htmlFor="wizard_surfaces">Surfaces</CLabel>
-				</div>
-			</div>
-			<div className="indent3">
-				<div className="form-check form-check-inline mr-1">
-					<CInputCheckbox
 						id="wizard_triggers"
 						checked={config.triggers}
 						onChange={(e) => setValue('triggers', e.currentTarget.checked)}
@@ -86,6 +76,16 @@ export function ResetOptionsStep({ config, setValue }) {
 				) : (
 					''
 				)}
+			</div>
+			<div className="indent3">
+				<div className="form-check form-check-inline mr-1">
+					<CInputCheckbox
+						id="wizard_surfaces"
+						checked={config.surfaces}
+						onChange={(e) => setValue('surfaces', e.currentTarget.checked)}
+					/>
+					<CLabel htmlFor="wizard_surfaces">Surfaces</CLabel>
+				</div>
 			</div>
 			<div className="indent3">
 				<div className="form-check form-check-inline mr-1">
