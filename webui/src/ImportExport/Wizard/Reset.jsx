@@ -104,9 +104,9 @@ export function ResetOptionsStep({ config, setValue }) {
 export function ResetApplyStep({ config }) {
 	let changes = []
 
-	if (config.connections && !config.butons && !config.triggers) {
+	if (config.connections && !config.buttons && !config.triggers) {
 		changes.push(<li>All connections including their actions, feedbacks, and triggers.</li>)
-	} else if (config.connections && !config.butons) {
+	} else if (config.connections && !config.buttons) {
 		changes.push(<li>All connections including their button actions and feedbacks.</li>)
 	} else if (config.connections && !config.triggers) {
 		changes.push(<li>All connections including their triggers and trigger actions.</li>)
